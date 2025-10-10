@@ -1,6 +1,6 @@
 ### Project Approvals:
 ##	What is your app and why?
-## The Yard is a full-stack social media platform for fraternities and sororities. It lets students and alumni join (or verify) their chapters, share posts, organize events, and network across campuses.
+The Yard is a full-stack social media platform for fraternities and sororities. It lets students and alumni join (or verify) their chapters, share posts, organize events, and network across campuses.
 
 ##	What is the shape/model of your data? (testing for undergrad only)
 
