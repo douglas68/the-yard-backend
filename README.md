@@ -15,7 +15,6 @@ role ("member"| "officer" | "alumni" | "admin")
 
 }
 
-
 Chapter{
     _id                 // Greek Letters
     name,               // 

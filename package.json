@@ -6,5 +6,26 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1"
-  }
+  },
+  "name": "the_yard_backend",
+  "version": "1.0.0",
+  "description": "The Yard is a full-stack social media platform for fraternities and sororities on a single campus. It lets students and alumni join (or verify) their chapters, share posts, organize events, and network across campuses.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/douglas68/the-yard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/douglas68/the-yard/issues"
+  },
+  "homepage": "https://github.com/douglas68/the-yard#readme"
 }
