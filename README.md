@@ -1,63 +1,92 @@
 ### Project Approvals:
 ##	What is your app and why?
-The Yard is a full-stack social media platform for fraternities and sororities. It lets students and alumni join (or verify) their chapters, share posts, organize events, and network across campuses.
+The Yard is a full-stack social media platform for fraternities and sororities on a single campus. It lets students and alumni join (or verify) their chapters, share posts, organize events, and network across campuses.
 
 ##	What is the shape/model of your data? (testing for undergrad only)
 
 User{
-_id
-name
-email
+_id,
+name,
+email,
 password
 pictureURL
-graduationDate
-organizationID
 chapterID
-campusID
 role ("member"| "officer" | "alumni" | "admin")
-}
 
+}
 
 
 Chapter{
     _id                 // Greek Letters
     name,               // 
-    organizationID:
-    campusID,
+    organization:     // have a list to pick from  
     crestUrl:
     about, (this can put their)
     establishedDate,
-    chapterType,        //"undergrad" | "professional" | "alumni",
+    isActive:boolean,
 }
 
-Organization {
-  _id,
-  name,                // "Lambda Tau Omega"
-  shortName,           // "LTO"
-  type,                // "sorority" | "fraternity" | "co-ed"
-  council,             // "NPHC" | (I need to research the rest)
-  colors: [ "#0D47A1", "#B0BEC5" ],
-  crestUrl,
-  foundedOn,           // date
-  website,
+Post{
+  _id
+  authorID // User.id
+  chapterID //if the post is by a chapter
+  text //
+  picture//
+  like count
+  createdAT
+  
 }
 
-campus{
-    _id,
-    name,
-    city,
-    state,
-    howmanyGreeks,
-    whatGreeks,
-}
+
+
 
 ##	What are your CRUD Routes?
+Auth
+POST /api/auth/register — create account
+POST /api/auth/login — get JWT
+GET /api/auth/me — current user profile
+
+Users
+GET /api/users/:id
+PATCH /api/users/:id — update profile (name, pictureUrl, graduationDate)
+
+Chapters
+GET /api/chapters?campusId=&organizationId //List chapters
+GET /api/chapters/:id // chapter details 
+(maybe)PATCH /api/chapters/:id (officer) — about, crestUrl, isActive 
+
+Post
+Posts
+GET /api/posts?chapterId=&authorId=&limit=20&cursor= — list posts (newest first)
+GET /api/posts/:id — get a single post 
+POST /api/posts — create post 
+PATCH /api/posts/:id — update post 
+DELETE /api/posts/:id — delete post 
+POST /api/posts/:id/like — like a post 
+DELETE /api/posts/:id/like — unlike a post
+
 
 ##	Wireframe/what are your 4 pages?
 
-1) login
-2) Dashboard(your own)
-3) The organization Page
-4) The Chapter Page
-5) Campus Page
+login page
+createlogin page
+Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
+profile
+edit profile
+
+
+-------------------------------------------------------------------------------------------
+
+10/14/25
+My Project was approved but this need to be scalled down to be able to commpliish this capstone within thw two weeks. 
+
+I was able to scale down the objects to User, chapter and posts.  
+
+I will be creating the following pages for now: 
+
+login page
+createlogin page
+Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
+profile
+edit profile
 
