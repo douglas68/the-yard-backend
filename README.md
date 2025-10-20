@@ -37,7 +37,10 @@ Post{
 }
 
 
-
+## Later Add ons
+-comments
+-the likes are link with the user
+-events
 
 ##	What are your CRUD Routes?
 Auth
@@ -67,8 +70,8 @@ DELETE /api/posts/:id/like — unlike a post
 
 ##	Wireframe/what are your 4 pages?
 
-login page
-createlogin page
+<!-- login page
+createlogin page  hold off for now-->
 Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
 profile
 edit profile
@@ -88,4 +91,18 @@ createlogin page
 Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
 profile
 edit profile
+
+10/15/25
+
+Schemas are compeleted
+
+10/16/25
+Routes completed
+
+10/17/25
+Finish backend and test
+
+Start Frontend 
+
+-----------------------
 

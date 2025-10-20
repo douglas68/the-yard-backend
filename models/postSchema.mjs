@@ -22,11 +22,7 @@ const PostSchema = new mongoose.Schema(
       maxlength: 1000,
     },
 
-    // picture: {
-    //   type: String, 
-    //   trim: true,
-    //   default: "",
-    // },
+ 
 
     likeCount: {
       type: Number,
