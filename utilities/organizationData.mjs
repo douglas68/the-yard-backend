@@ -2,7 +2,7 @@ export default [
   {
     name: "Alpha Chi Rho",
     letters: "ΑΧΡ",
-    crestUrl: "",
+    crestUrl: "https://www.alphachirho.org/wp-content/uploads/2018/11/Coat-of-Arms-Color.png",
     about: "IFC fraternity with presence at Rutgers University–Camden.",
     establishedDate: new Date("1895-06-04"),
     isActive: true,
@@ -18,7 +18,7 @@ export default [
   {
     name: "Delta Phi Epsilon",
     letters: "ΔΦΕ",
-    crestUrl: "",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/en/8/8d/Delta_Phi_Epsilon_official_crest.png",
     about: "NPC sorority with an active chapter at Rutgers–Camden.",
     establishedDate: new Date("1917-03-17"),
     isActive: true,
@@ -26,15 +26,15 @@ export default [
   {
     name: "Lambda Sigma Upsilon Latino Fraternity, Inc.",
     letters: "ΛΣΥ",
-    crestUrl: "",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/en/7/77/3dshield.jpg",
     about: "NALFO fraternity; active chapter at Rutgers–Camden.",
     establishedDate: new Date("1979-04-05"),
-    isActive: true,
+    isActive: false,
   },
   {
     name: "Lambda Tau Omega Sorority, Inc.",
     letters: "ΛΤΩ",
-    crestUrl: "",
+    crestUrl: "https://upload.wikimedia.org/wikipedia/en/d/dd/Lto_shield.jpg",
     about: "Multicultural sorority (LTO “Mermaids”) active at Rutgers–Camden.",
     establishedDate: new Date("1988-10-09"), 
     isActive: true,
@@ -85,7 +85,7 @@ export default [
     crestUrl: "",
     about: "IFC fraternity; Pi Chi Chapter at Rutgers–Camden.",
     establishedDate: new Date("1899-01-10"),
-    isActive: true,
+    isActive: false,
   },
   {
     name: "Zeta Phi Beta Sorority, Inc.",

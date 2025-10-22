@@ -7,26 +7,22 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "organization",
       required: true,
     },
-
     text: {
       type: String,
       required: true,
       trim: true,
       maxlength: 1000,
     },
-
     picture: {
       type: String,
       trim: true,
       default: "",
     },
-
     likeCount: {
       type: Number,
       default: 0,
@@ -36,8 +32,10 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-PostSchema.index({ createdAt: -1 });
-PostSchema.index({ organizationId: 1, createdAt: -1 });
-PostSchema.index({ authorId: 1, createdAt: -1 });
 
-export default mongoose.model("Post", PostSchema);
+postSchema.index({ createdAt: -1 });
+postSchema.index({ organizationId: 1, createdAt: -1 });
+postSchema.index({ authorId: 1, createdAt: -1 });
+
+
+export default mongoose.model("Post", postSchema);

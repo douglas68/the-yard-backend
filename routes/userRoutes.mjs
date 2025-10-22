@@ -1,46 +1,125 @@
 import { Router } from "express";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import User from "../models/userSchema.mjs";
 
 const router = Router();
 
-// GET PROFILE (by id)
-router.get("/:id", async (req, res) => { 
+//Register 
+router.post("/", async (req, res) => {
   try {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid user id" });
+    const { fullName, email, password, organizationId, role } = req.body;
+
+    // Validation
+    if (!fullName?.trim()) {
+      return res.status(400).json({ error: "Full name is required" });
+    }
+    if (!email?.trim()) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+    if (!password || password.length < 6) {
+      return res.status(400).json({ error: "Password must be at least 6 characters" });
+    }
+    if (!organizationId) {
+      return res.status(400).json({ error: "Organization ID is required" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(organizationId)) {
+      return res.status(400).json({ error: "Invalid organization ID" });
     }
 
-    const user = await User.findById(id).select(
-      "_id fullName email organizationId role createdAt"
-    );
-    if (!user) return res.status(404).json({ error: "User not found" });
+    // Email validation 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
 
-    return res.json({ user });
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Check if user exists
+    const exists = await User.findOne({ email: normalizedEmail });
+    if (exists) {
+      return res.status(409).json({ error: "Email already registered" });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    // Create user
+    const user = await User.create({
+      fullName: fullName.trim(),
+      email: normalizedEmail,
+      passwordHash,
+      organizationId,
+      role: role || "member",
+    });
+
+    
+    const userResponse = {
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      organizationId: user.organizationId,
+      role: user.role,
+      createdAt: user.createdAt,
+    };
+
+    res.status(201).json({ user: userResponse });
   } catch (err) {
-    console.error("GET /users/:id error:", err.message);
-    return res.status(500).json({ error: "Server error" });
+    if (err.code === 11000) {
+      return res.status(409).json({ error: "Email already registered" });
+    }
+    console.error("POST /users error:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
-// GET MY PROFILE (no-auth demo: ?userId=...)
+// GET MY PROFILE
 router.get("/me", async (req, res) => {
   try {
     const { userId } = req.query;
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid or missing userId" });
+    
+    if (!userId) {
+      return res.status(400).json({ error: "userId query parameter required" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "Invalid userId" });
     }
 
-    const user = await User.findById(userId).select(
-      "_id fullName email organizationId role about createdAt"
-    );
-    if (!user) return res.status(404).json({ error: "User not found" });
+    const user = await User.findById(userId)
+      .select("_id fullName email organizationId role createdAt updatedAt")
+      .lean();
 
-    return res.json({ user });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ user });
   } catch (err) {
     console.error("GET /users/me error:", err.message);
-    return res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// GET USER BY ID 
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    const user = await User.findById(id)
+      .select("_id fullName email organizationId role createdAt")
+      .lean();
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (err) {
+    console.error("GET /users/:id error:", err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -48,31 +127,36 @@ router.get("/me", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid user id" });
+      return res.status(400).json({ error: "Invalid user ID" });
     }
 
-    const { fullName, email, organizationId, about } = req.body;
-
+    const { fullName, email, organizationId } = req.body;
     const update = {};
 
-    if (typeof fullName === "string" && fullName.trim()) {
+    // Validate and build update object
+    if (fullName !== undefined) {
+      if (typeof fullName !== "string" || !fullName.trim()) {
+        return res.status(400).json({ error: "Full name cannot be empty" });
+      }
       update.fullName = fullName.trim();
     }
 
-    if (typeof email === "string" && email.trim()) {
-      update.email = email.toLowerCase().trim();
-    }
-
-    if (typeof organizationId === "string") {
-      if (!mongoose.Types.ObjectId.isValid(organizationId)) {
-        return res.status(400).json({ error: "Invalid organizationId" });
+    if (email !== undefined) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const trimmedEmail = email.trim();
+      if (!emailRegex.test(trimmedEmail)) {
+        return res.status(400).json({ error: "Invalid email format" });
       }
-      update.organizationId = organizationId;
+      update.email = trimmedEmail.toLowerCase();
     }
 
-    if (typeof about === "string") {
-      update.about = about.trim();
+    if (organizationId !== undefined) {
+      if (organizationId && !mongoose.Types.ObjectId.isValid(organizationId)) {
+        return res.status(400).json({ error: "Invalid organization ID" });
+      }
+      update.organizationId = organizationId || null;
     }
 
     if (Object.keys(update).length === 0) {
@@ -82,19 +166,19 @@ router.patch("/:id", async (req, res) => {
     const user = await User.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
-    }).select(
-      "_id fullName email organizationId role about createdAt updatedAt"
-    );
+    }).select("_id fullName email organizationId role createdAt updatedAt");
 
-    if (!user) return res.status(404).json({ error: "User not found" });
-    return res.json({ user });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ user });
   } catch (err) {
-    // Handle duplicate email nicely
-    if (err?.code === 11000 && err?.keyPattern?.email) {
+    if (err.code === 11000) {
       return res.status(409).json({ error: "Email already in use" });
     }
     console.error("PATCH /users/:id error:", err.message);
-    return res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 

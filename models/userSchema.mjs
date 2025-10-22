@@ -18,11 +18,12 @@ const userSchema = new mongoose.Schema(
     passwordHash: {
       type: String,
       required: true,
+      select: false, 
     },
     organizationId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "organization", 
-      required: false,
+      ref: "organization",
+      required: false, 
     },
     role: {
       type: String,
@@ -33,7 +34,16 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
+// Indexes
 userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ organizationId: 1 }); // Add this - important for queries
+
+
+userSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret.passwordHash;
+    return ret;
+  },
+});
 
 export default mongoose.model("User", userSchema);

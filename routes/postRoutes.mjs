@@ -1,15 +1,11 @@
-
 import { Router } from "express";
 import mongoose from "mongoose";
-import Post from "../models/Post.mjs";
+import Post from "../models/postSchema.mjs"; 
 
 const router = Router();
 
-/**
- * GET /api/posts
- * List posts (newest first)
- * Query: ?organizationId=&authorId=&limit=20&cursor=<ObjectId>
- */
+// GET /api/posts
+// List posts (newest first)
 router.get("/", async (req, res) => {
   try {
     const { organizationId, authorId, limit = 20, cursor } = req.query;
@@ -49,10 +45,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-/**
- * GET /api/posts/:id
- * Read a single post
- */
+// GET /api/posts/:id
+// Read a single post
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -68,11 +62,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/**
- * POST /api/posts
- * Create a post
- * Body: { text, picture?, authorId, organizationId }
- */
+// POST /api/posts
+// Create a post
+
 router.post("/", async (req, res) => {
   try {
     const { text, picture, authorId, organizationId } = req.body;
@@ -101,11 +93,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-/**
- * PATCH /api/posts/:id
- * Update a post (demo guard: require matching authorId)
- * Body: { text?, picture?, authorId }
- */
+//PATCH /api/posts/:id
+// Update a post (demo guard: require matching authorId)
 router.patch("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -127,8 +116,12 @@ router.patch("/:id", async (req, res) => {
     }
 
     const update = {};
-    if (typeof text === "string") update.text = text.trim();
-    if (typeof picture === "string") update.picture = picture.trim();
+    if (typeof text === "string" && text.trim()) { // ← Added text.trim() check
+      update.text = text.trim();
+    }
+    if (typeof picture === "string") {
+      update.picture = picture.trim();
+    }
 
     if (Object.keys(update).length === 0) {
       return res.status(400).json({ error: "No valid fields to update" });
@@ -137,7 +130,7 @@ router.patch("/:id", async (req, res) => {
     const updated = await Post.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
-    });
+    }).lean();
 
     return res.json({ post: updated });
   } catch (err) {
@@ -146,11 +139,9 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-/**
- * DELETE /api/posts/:id
- * Delete a post (demo guard: require matching authorId)
- * Query or Body: authorId
- */
+// DELETE /api/posts/:id
+// Delete a post
+
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -178,11 +169,8 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-/**
- * (Optional) Like / Unlike
- * POST /api/posts/:id/like    { userId }
- * DELETE /api/posts/:id/like  { userId }
- */
+// POST /api/posts/:id/like
+// Increment like count
 router.post("/:id/like", async (req, res) => {
   try {
     const { id } = req.params;
@@ -202,6 +190,9 @@ router.post("/:id/like", async (req, res) => {
   }
 });
 
+// DELETE /api/posts/:id/like
+// Decrement like count
+
 router.delete("/:id/like", async (req, res) => {
   try {
     const { id } = req.params;
@@ -214,7 +205,7 @@ router.delete("/:id/like", async (req, res) => {
       { new: true }
     ).lean();
     if (!post) return res.status(404).json({ error: "Post not found" });
-    // prevent negative numbers
+    // no negative numbers
     if (post.likeCount < 0) {
       await Post.findByIdAndUpdate(id, { likeCount: 0 });
       return res.json({ likeCount: 0 });
