@@ -4,37 +4,39 @@ The Yard is a full-stack social media platform for fraternities and sororities o
 
 ##	What is the shape/model of your data? (testing for undergrad only)
 
-User{
-_id,
-name,
-email,
-password
-pictureURL
-chapterID
-role ("member"| "officer" | "alumni" | "admin")
-
+User {
+  _id,
+  fullName,
+  email,
+  passwordHash,
+  organizationId, // references Organization
+  role: ("member" | "officer" | "alumni" | "admin"),
+  createdAt,
+  updatedAt
 }
 
-Chapter{
-    _id                 // Greek Letters
-    name,               // 
-    organization:     // have a list to pick from  
-    crestUrl:
-    about, (this can put their)
-    establishedDate,
-    isActive:boolean,
+Organization {
+  _id,
+  name,
+  letters,           // Greek letters (e.g. ΛΤΩ)
+  organization,      // Full organization name
+  crestUrl,
+  about,
+  establishedDate,
+  isActive: Boolean,
+  createdAt,
+  updatedAt
 }
 
-Post{
-  _id
-  authorID // User.id
-  chapterID //if the post is by a chapter
-  text //
-  picture//
-  like count
-  createdAT
-  
-}
+Post {
+  _id,
+  authorId,        // references User
+  organizationId,  // references Organization
+  text,
+  pictureUrl,
+  likeCount,
+  createdAt,
+  updatedAt
 
 
 ## Later Add ons
@@ -43,38 +45,37 @@ Post{
 -events
 
 ##	What are your CRUD Routes?
-Auth
-POST /api/auth/register — create account
-POST /api/auth/login — get JWT
-GET /api/auth/me — current user profile
+
+POST	/api/auth/register	Create a new account
+POST	/api/auth/login	Authenticate user & return JWT
+GET	/api/auth/me	Get current user profile
 
 Users
-GET /api/users/:id
-PATCH /api/users/:id — update profile (name, pictureUrl, graduationDate)
+GET	/api/users/:id	Get user profile by ID
+GET	/api/users/me	Get logged-in user profile
+PATCH	/api/users/:id	Update user info (name, email, organizationId, about)
 
 Chapters
-GET /api/chapters?campusId=&organizationId //List chapters
-GET /api/chapters/:id // chapter details 
-(maybe)PATCH /api/chapters/:id (officer) — about, crestUrl, isActive 
+GET	/api/organizations	List all organizations
+GET	/api/organizations/:id	Get details of one organization
+PATCH	/api/organizations/:id	Update details (officer/admin only)
 
 Post
-Posts
-GET /api/posts?chapterId=&authorId=&limit=20&cursor= — list posts (newest first)
-GET /api/posts/:id — get a single post 
-POST /api/posts — create post 
-PATCH /api/posts/:id — update post 
-DELETE /api/posts/:id — delete post 
-POST /api/posts/:id/like — like a post 
-DELETE /api/posts/:id/like — unlike a post
+GET	/api/posts	List posts (filter by org, author, or campus feed)
+GET	/api/posts/:id	View a single post
+POST	/api/posts	Create a post
+PATCH	/api/posts/:id	Edit a post
+DELETE	/api/posts/:id	Delete a post
+POST	/api/posts/:id/like	Like a post
+DELETE	/api/posts/:id/like	Unlike a post
 
 
 ##	Wireframe/what are your 4 pages?
 
-<!-- login page
-createlogin page  hold off for now-->
 Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
 profile
 edit profile
+Chapter
 
 
 -------------------------------------------------------------------------------------------
@@ -82,19 +83,13 @@ edit profile
 ## The Yard – Project Spec
 ## User Stories
 
-## As a guest, I want to:
->Browse the campus feed to see what Greek life is posting.
->View a chapter’s public page.
-
 ## As a user (member/alumni), I want to:
->Create a profile so I can post and interact.
->Join/select my chapter during signup.
->Create posts (text + optional photo) that appear in the campus feed.
->Filter the feed by chapter.
->Edit my profile (name, email, chapter, about, graduation year).
->See my own posts on my profile.
->Like posts
->Delete or edit my own posts.
+Create my profile and select my organization
+Make posts (text + photo)
+Like posts
+Filter the feed by organization
+Edit or delete my posts
+Update my profile details
 
 ## As a chapter officer, I want to:
 >Update my chapter’s “About,” crest URL, and active status.
@@ -108,8 +103,35 @@ edit profile
 ## Types of Users
 Users
 Officer
-Admin (Pause)
+
+
+## 💭 Challenges & Lessons Learned
+
+When I started this project, I had a very ambitious vision for The Yard.
+Originally, I wanted to build a full-scale social media platform where fraternities and sororities could:
+>Verify chapter memberships,
+>Host events and fundraisers,
+>Like, comment, and share posts,
+
+And even manage administrative controls through multiple user roles (member, officer, admin).
+
+It was meant to be a complete ecosystem for Greek life. Something closer to a custom social platform or even a campus-level LinkedIn or Facebook for Greek organizations. However, once I started actually building it, I realized that I was reaching too high for the time frame and scope of this capstone.
+There were so many moving parts such as user authentication, file uploads, event systems, and complex relationships between users, chapters, and posts.
+That it quickly became overwhelming. :/
+
+To stay realistic and meet the course goals, I made the decision to scale it down and focus on the core features that truly demonstrated my backend and frontend skills:
+>Setting up a MongoDB database with Mongoose schemas for User, Organization, and Post.
+>Building CRUD routes for users and posts.
+>Creating a simple React front-end with a dashboard (feed), profile, and edit profile pages.
+>Managing state and data fetching using React Hooks.
+
+What I ended up creating was something simpler, a basic social feed, similar in spirit to Twitter, but centered around campus Greek life.
+Users can view and create posts, update their profiles, and see a feed filtered by organization.
+
+While it’s smaller than my original plan, it’s much more realistic, functional, and complete.
+This experience taught me one of the most valuable lessons in software development:
+
+"It’s better to build something simple that works well than something complex that never gets finished."
 
 
 
-The events is extra
