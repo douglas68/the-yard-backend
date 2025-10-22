@@ -1,17 +1,16 @@
-
 import mongoose from "mongoose";
 
-const PostSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
   {
-    authorID: {
+    authorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true, 
+      required: true,
     },
 
-    chapterID: {
+    organizationId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Chapter",
+      ref: "organization",
       required: true,
     },
 
@@ -22,7 +21,11 @@ const PostSchema = new mongoose.Schema(
       maxlength: 1000,
     },
 
- 
+    picture: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
     likeCount: {
       type: Number,
@@ -33,9 +36,8 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// I would love to add comments
-
 PostSchema.index({ createdAt: -1 });
-PostSchema.index({ chapterID: 1, createdAt: -1 });
+PostSchema.index({ organizationId: 1, createdAt: -1 });
+PostSchema.index({ authorId: 1, createdAt: -1 });
 
 export default mongoose.model("Post", PostSchema);

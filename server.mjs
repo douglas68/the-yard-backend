@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/conn.mjs"
 import cors from "cors";
-import chaptersRoutes from "./routes/chapterRoutes.mjs";
+import organizationRoutes from "./routes/";
 import userRoutes from "./routes/userRoutes.mjs";
 
 
