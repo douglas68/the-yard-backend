@@ -79,30 +79,37 @@ edit profile
 
 -------------------------------------------------------------------------------------------
 
-10/14/25
-My Project was approved but this need to be scalled down to be able to commpliish this capstone within thw two weeks. 
+## The Yard – Project Spec
+## User Stories
 
-I was able to scale down the objects to User, chapter and posts.  
+## As a guest, I want to:
+>Browse the campus feed to see what Greek life is posting.
+>View a chapter’s public page.
 
-I will be creating the following pages for now: 
+## As a user (member/alumni), I want to:
+>Create a profile so I can post and interact.
+>Join/select my chapter during signup.
+>Create posts (text + optional photo) that appear in the campus feed.
+>Filter the feed by chapter.
+>Edit my profile (name, email, chapter, about, graduation year).
+>See my own posts on my profile.
+>Like posts
+>Delete or edit my own posts.
 
-login page
-createlogin page
-Dashboard(Campus page that shows all of the events and posts made by the users on the campus)
-profile
-edit profile
+## As a chapter officer, I want to:
+>Update my chapter’s “About,” crest URL, and active status.
+>Highlight chapter events or announcements (optional MVP+ Events). (EXTRA)
 
-10/15/25
+## As an admin, I want to: (pause)
+>Update or deactivate a chapter if needed.
+>Update user roles (member/officer/alumni/admin).
+>Remove posts that violate guidelines.
 
-Schemas are compeleted
+## Types of Users
+Users
+Officer
+Admin (Pause)
 
-10/16/25
-Routes completed
 
-10/17/25
-Finish backend and test
 
-Start Frontend 
-
------------------------
-
+The events is extra

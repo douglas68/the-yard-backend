@@ -1,6 +1,6 @@
 import { Router } from "express";
 import mongoose from "mongoose";
-import Chapter from "../models/chapter.mjs";
+import Chapter from "../models/chapterSchema.mjs";
 
 const router = Router();
 
