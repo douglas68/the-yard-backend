@@ -1,7 +1,3 @@
-// GET /api/users/:id
-// GET /api/users/me
-// PATCH /api/users/:id — update profile (fullName, email, chapterID, about)
-
 import { Router } from "express";
 import mongoose from "mongoose";
 import User from "../models/userSchema.mjs";
@@ -9,7 +5,7 @@ import User from "../models/userSchema.mjs";
 const router = Router();
 
 // GET PROFILE (by id)
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => { 
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -17,7 +13,7 @@ router.get("/:id", async (req, res) => {
     }
 
     const user = await User.findById(id).select(
-      "_id fullName email chapterID role createdAt"
+      "_id fullName email organizationId role createdAt"
     );
     if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -37,7 +33,7 @@ router.get("/me", async (req, res) => {
     }
 
     const user = await User.findById(userId).select(
-      "_id fullName email chapterID role about createdAt"
+      "_id fullName email organizationId role about createdAt"
     );
     if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -56,7 +52,7 @@ router.patch("/:id", async (req, res) => {
       return res.status(400).json({ error: "Invalid user id" });
     }
 
-    const { fullName, email, chapterID, about } = req.body;
+    const { fullName, email, organizationId, about } = req.body;
 
     const update = {};
 
@@ -68,11 +64,11 @@ router.patch("/:id", async (req, res) => {
       update.email = email.toLowerCase().trim();
     }
 
-    if (typeof chapterID === "string") {
-      if (!mongoose.Types.ObjectId.isValid(chapterID)) {
-        return res.status(400).json({ error: "Invalid chapterID" });
+    if (typeof organizationId === "string") {
+      if (!mongoose.Types.ObjectId.isValid(organizationId)) {
+        return res.status(400).json({ error: "Invalid organizationId" });
       }
-      update.chapterID = chapterID;
+      update.organizationId = organizationId;
     }
 
     if (typeof about === "string") {
@@ -86,12 +82,14 @@ router.patch("/:id", async (req, res) => {
     const user = await User.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
-    }).select("_id fullName email chapterID role about createdAt updatedAt");
+    }).select(
+      "_id fullName email organizationId role about createdAt updatedAt"
+    );
 
     if (!user) return res.status(404).json({ error: "User not found" });
     return res.json({ user });
   } catch (err) {
-    // doublecheck for Duplicate email
+    // Handle duplicate email nicely
     if (err?.code === 11000 && err?.keyPattern?.email) {
       return res.status(409).json({ error: "Email already in use" });
     }

@@ -1,46 +1,111 @@
-// seed/signupData.mjs
+
 export default [
   {
-    fullName: "Priscalene Felix",
+    fullName: "Ashley Domineck",
     email: "ashley@example.com",
-    password: "Mermaids!2025",
+    password: "Password!23",
+    organizationName: "Lambda Tau Omega Sorority, Inc.",
     role: "officer",
-    chapterLetters: "CHI",
+    graduationYear: 2026,
+    about: "Community-first leader. Organizer of Lights & Lyrics."
   },
   {
-    fullName: "Jae Monet",
-    email: "jae@example.com",
-    password: "Sisterhood#88",
+    fullName: "Peter Simmons",
+    email: "peter@example.com",
+    password: "Password!23",
+    organizationName: "Alpha Chi Rho",
     role: "member",
-    chapterName: "Philadelphia Metro Professional",
+    graduationYear: 2025,
+    about: "CS major, intramural soccer captain."
   },
   {
-    fullName: "Krizzia Santos",
-    email: "krizzia@example.com",
-    password: "Service&Scholarship1",
+    fullName: "Maria Alvarez",
+    email: "maria@example.com",
+    password: "Password!23",
+    organizationName: "Lambda Theta Alpha Latin Sorority, Inc.",
     role: "member",
-    chapterLetters: "IOTA",
+    graduationYear: 2027,
+    about: "STEM peer mentor and study-night host."
   },
   {
-    fullName: "Shelly Harper",
-    email: "shelly@example.com",
-    password: "Walk4ACure!",
+    fullName: "Jordan Lee",
+    email: "jordan@example.com",
+    password: "Password!23",
+    organizationName: "Tau Kappa Epsilon",
+    role: "member",
+    graduationYear: 2026,
+    about: "Events committee—open mic & game nights."
+  },
+  {
+    fullName: "Tina Harris",
+    email: "tina@example.com",
+    password: "Password!23",
+    organizationName: "Zeta Phi Beta Sorority, Inc.",
+    role: "member",
+    graduationYear: 2025,
+    about: "Scholarship outreach and mentoring."
+  },
+  {
+    fullName: "Leo Johnson",
+    email: "leo@example.com",
+    password: "Password!23",
+    organizationName: "Phi Beta Sigma Fraternity, Inc.",
+    role: "member",
+    graduationYear: 2025,
+    about: "Community cookouts chef-in-chief."
+  },
+  {
+    fullName: "Nina Patel",
+    email: "nina@example.com",
+    password: "Password!23",
+    organizationName: "Mu Sigma Upsilon Sorority, Inc.",
+    role: "member",
+    graduationYear: 2027,
+    about: "Service drives and tutoring."
+  },
+  {
+    fullName: "Sam Carter",
+    email: "sam@example.com",
+    password: "Password!23",
+    organizationName: "Tau Epsilon Phi",
+    role: "member",
+    graduationYear: 2026,
+    about: "Music + tech, collab events."
+  },
+  {
+    fullName: "Vivian Chen",
+    email: "vivian@example.com",
+    password: "Password!23",
+    organizationName: "Sigma Delta Tau",
+    role: "member",
+    graduationYear: 2026,
+    about: "Recruitment and wellness initiatives."
+  },
+  {
+    fullName: "Darius Green",
+    email: "darius@example.com",
+    password: "Password!23",
+    organizationName: "Lambda Sigma Upsilon Latino Fraternity, Inc.",
+    role: "member",
+    graduationYear: 2025,
+    about: "Community garden and neighborhood cleanups."
+  },
+  {
+    fullName: "Karen Lopez",
+    email: "karen@example.com",
+    password: "Password!23",
+    organizationName: "Delta Phi Epsilon",
+    role: "member",
+    graduationYear: 2027,
+    about: "Mental health advocacy."
+  },
+  {
+    fullName: "Mike Rhodes",
+    email: "mike@example.com",
+    password: "Password!23",
+    organizationName: "Alpha Kappa Alpha Sorority, Inc.",
     role: "alumni",
-    chapterName: "At-Large Alumni",
-  },
-  {
-    fullName: "Dominic Rivera",
-    email: "dominic@example.com",
-    password: "GreekLife123",
-    role: "member",
-    chapterLetters: "PHI",
-  },
-  // Admin example
-  {
-    fullName: "System Admin",
-    email: "admin@example.com",
-    password: "ChangeMeNow!123",
-    role: "admin",
-    chapterName: "Tri-State Professional",
-  },
+    graduationYear: 2022,
+    about: "Career prep panels and networking."
+  }
 ];
