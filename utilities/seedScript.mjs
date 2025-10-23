@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
-// Collections/Models
 import Organization from "../models/organizationSchema.mjs";
 import User from "../models/userSchema.mjs";
 import Post from "../models/postSchema.mjs";
-// Data
 import organizations from "./organizationData.mjs";
 import users from "./signupData.mjs";
 import posts from "./postData.mjs";
