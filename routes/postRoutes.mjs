@@ -35,6 +35,8 @@ router.get("/", async (req, res) => {
     })
       .sort({ _id: -1 })
       .limit(lim)
+      .populate({ path: "authorId", select: "fullName" })       
+      .populate({ path: "organizationId", select: "name letters" })
       .lean();
 
     const nextCursor = items.length ? items[items.length - 1]._id : null;
@@ -53,7 +55,11 @@ router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid post id" });
     }
-    const post = await Post.findById(id).lean();
+    const post = await Post.findById(id)
+      .populate({ path: "authorId", select: "fullName" })
+      .populate({ path: "organizationId", select: "name letters" })
+      .lean();
+
     if (!post) return res.status(404).json({ error: "Post not found" });
     return res.json({ post });
   } catch (err) {
