@@ -18,7 +18,7 @@ export default [
   {
     authorEmail: "maria@example.com",
     organizationName: "Lambda Theta Alpha Latin Sorority, Inc.",
-    text: "Study night in the library. Open to everyone—bring a friend and your laptop 📚",
+    text: "Study night in the library. Open to everyone! Bring a friend and your laptop 📚",
     picture: "",
     likeCount: 5,
     createdAt: new Date("2025-09-05T18:45:00Z"),
@@ -34,7 +34,7 @@ export default [
   {
     authorEmail: "tina@example.com",
     organizationName: "Zeta Phi Beta Sorority, Inc.",
-    text: "Scholarship applications open next week—details coming soon.",
+    text: "Scholarship applications open next week. Details coming soon.",
     picture: "",
     likeCount: 7,
     createdAt: new Date("2025-09-08T16:05:00Z"),
@@ -58,7 +58,7 @@ export default [
   {
     authorEmail: "sam@example.com",
     organizationName: "Tau Epsilon Phi",
-    text: "Open mic night collab with LTA next Thursday—DM to perform 🎤",
+    text: "Open mic night collab with LTA next Thursday DM to perform 🎤",
     picture: "",
     likeCount: 1,
     createdAt: new Date("2025-09-13T21:40:00Z"),
@@ -74,7 +74,7 @@ export default [
   {
     authorEmail: "darius@example.com",
     organizationName: "Lambda Sigma Upsilon Latino Fraternity, Inc.",
-    text: "Volunteering at the community garden this Sunday—join us 🌱",
+    text: "Volunteering at the community garden this Sunday. Join us 🌱",
     picture: "",
     likeCount: 2,
     createdAt: new Date("2025-09-17T11:10:00Z"),
@@ -90,7 +90,7 @@ export default [
   {
     authorEmail: "mike@example.com",
     organizationName: "Alpha Kappa Alpha Sorority, Inc.",
-    text: "Panel on career prep and internships next Monday—RSVP link in bio.",
+    text: "Panel on career prep and internships next Monday. RSVP link in bio.",
     picture: "",
     likeCount: 3,
     createdAt: new Date("2025-09-20T20:05:00Z"),
